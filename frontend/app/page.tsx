@@ -250,8 +250,8 @@ export default function Home() {
                 outline: "none",
                 marginLeft: "0.5rem"
               }}
-              onMouseEnter={(e) => e.target.style.background = darkMode ? "#4b5563" : "#9ca3af"}
-              onMouseLeave={(e) => e.target.style.background = darkMode ? "#374151" : "#d1d5db"}
+              onMouseEnter={(e) => (e.target as HTMLElement).style.background = darkMode ? "#4b5563" : "#9ca3af"}
+              onMouseLeave={(e) => (e.target as HTMLElement).style.background = darkMode ? "#374151" : "#d1d5db"}
             >
               <div style={{
                 width: "20px",
