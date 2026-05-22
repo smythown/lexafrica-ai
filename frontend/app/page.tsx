@@ -25,6 +25,7 @@ interface Result {
   next_steps: string[];
   legal_letter: string;
   disclaimer: string;
+  sources: {url: string, title: string, snippet: string}[];
 }
 
 export default function Home() {
@@ -36,7 +37,7 @@ export default function Home() {
   const [activeAgent, setActiveAgent] = useState(0);
   const [result, setResult] = useState<Result | null>(null);
   const [error, setError] = useState("");
-  const [tab, setTab] = useState<"advice"|"rights"|"letter">("advice");
+  const [tab, setTab] = useState<"advice"|"rights"|"letter"|"sources">("advice");
   const [stats, setStats] = useState({ people: 0, countries: 0, seconds: 0 });
   const appRef = useRef<HTMLDivElement>(null);
 
@@ -285,10 +286,10 @@ export default function Home() {
               </div>
 
               <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem" }}>
-                {(["advice","rights","letter"] as const).map(t => (
+                {(["advice","rights","letter","sources"] as const).map(t => (
                   <button key={t} onClick={() => setTab(t)}
                     style={{ flex: 1, padding: "0.75rem", borderRadius: "0.75rem", border: `1px solid ${tab === t ? "#e94560" : "#2d3748"}`, background: tab === t ? "#e94560" : "#0f0f1a", color: tab === t ? "#fff" : "#94a3b8", fontWeight: 600, fontSize: "0.875rem", cursor: "pointer" }}>
-                    {t === "advice" ? "⚖️ Advice" : t === "rights" ? "🛡️ Rights" : "📝 Legal Letter"}
+                    {t === "advice" ? "⚖️ Advice" : t === "rights" ? "🛡️ Rights" : t === "letter" ? "📝 Legal Letter" : "🌐 Sources"}
                   </button>
                 ))}
               </div>
@@ -318,6 +319,35 @@ export default function Home() {
                 )}
                 {tab === "letter" && (
                   <pre style={{ whiteSpace: "pre-wrap", fontFamily: "Georgia, serif", fontSize: "0.9375rem", color: "#e2e8f0", lineHeight: 1.8 }}>{result.legal_letter}</pre>
+                )}
+                {tab === "sources" && (
+                  <div>
+                    {result.sources && result.sources.length > 0 ? (
+                      result.sources.map((source, i) => (
+                        <div key={i} style={{ marginBottom: "1.5rem", padding: "1.5rem", background: "#16213e", borderRadius: "0.75rem", border: "1px solid #2d3748" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: "0.75rem" }}>
+                            <h3 style={{ fontSize: "1.125rem", fontWeight: 700, color: "#e2e8f0", margin: 0, flex: 1 }}>{source.title}</h3>
+                            <span style={{ fontSize: "0.75rem", color: "#10b981", background: "#0f3460", padding: "0.25rem 0.75rem", borderRadius: "999px", border: "1px solid #10b981", whiteSpace: "nowrap", marginLeft: "1rem" }}>
+                              🌐 Live Web Source
+                            </span>
+                          </div>
+                          <a href={source.url} target="_blank" rel="noopener noreferrer" 
+                            style={{ fontSize: "0.875rem", color: "#3b82f6", textDecoration: "none", display: "block", marginBottom: "0.75rem", wordBreak: "break-all" }}
+                            onMouseEnter={(e) => e.currentTarget.style.textDecoration = "underline"}
+                            onMouseLeave={(e) => e.currentTarget.style.textDecoration = "none"}>
+                            {source.url}
+                          </a>
+                          <p style={{ fontSize: "0.9375rem", color: "#94a3b8", lineHeight: 1.6, margin: 0 }}>{source.snippet}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <div style={{ textAlign: "center", padding: "3rem", color: "#94a3b8" }}>
+                        <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>🌐</div>
+                        <p style={{ fontSize: "1rem" }}>No live web sources available for this query.</p>
+                        <p style={{ fontSize: "0.875rem", marginTop: "0.5rem" }}>Analysis based on AI legal knowledge.</p>
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
 

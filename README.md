@@ -26,9 +26,11 @@
 - Extracts key facts
 
 ### 📚 Agent 2: Research Agent
+- Fetches LIVE legal information from the web using Bright Data
 - Finds applicable laws for the user's country
 - Identifies user's legal rights
 - Locates relevant legal bodies and time limits
+- Cites real web sources
 
 ### ⚖️ Agent 3: Advisor Agent
 - Provides plain-language legal advice
@@ -70,11 +72,12 @@
 ## 🛠️ Technology Stack
 
 - **AI Model:** Llama 3.3 70B (via Groq)
+- **Web Intelligence:** Bright Data SERP API + Web Unlocker
 - **Agent Framework:** LangChain + Custom orchestration
 - **Voice:** Speechmatics real-time ASR
 - **Backend:** FastAPI (Python)
 - **Frontend:** Next.js 15 + TypeScript
-- **Deployment:** Render + Vercel
+- **Deployment:** Railway + Vercel
 
 ---
 
