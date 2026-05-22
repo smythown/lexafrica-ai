@@ -39,6 +39,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [tab, setTab] = useState<"advice"|"rights"|"letter"|"sources">("advice");
   const [stats, setStats] = useState({ people: 0, countries: 0, seconds: 0 });
+  const [darkMode, setDarkMode] = useState(true);
   const appRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -58,6 +59,19 @@ export default function Home() {
     }, interval);
     return () => clearInterval(timer);
   }, []);
+
+  // Load and save theme preference
+  useEffect(() => {
+    const saved = localStorage.getItem('darkMode');
+    if (saved !== null) {
+      setDarkMode(JSON.parse(saved));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    document.documentElement.classList.toggle('light', !darkMode);
+  }, [darkMode]);
 
   const scrollToApp = () => {
     appRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -123,8 +137,40 @@ export default function Home() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 100%)", color: "#e2e8f0", scrollBehavior: "smooth" }}>
+    <div style={{ minHeight: "100vh", background: "linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)", color: "var(--text-primary)", scrollBehavior: "smooth" }}>
       <style jsx global>{`
+        :root {
+          --bg-primary: #0f0f1a;
+          --bg-secondary: #1a1a2e;
+          --bg-tertiary: #16213e;
+          --text-primary: #e2e8f0;
+          --text-secondary: #94a3b8;
+          --border-color: #2d3748;
+          --accent-blue: #3b82f6;
+          --accent-purple: #8b5cf6;
+          --card-bg: #1a1a2e;
+          --card-border: #2d3748;
+          --hero-primary: #ffffff;
+          --hero-accent: #e94560;
+        }
+        
+        .light {
+          --bg-primary: #ffffff;
+          --bg-secondary: #f8fafc;
+          --bg-tertiary: #ffffff;
+          --text-primary: #1e293b;
+          --text-secondary: #475569;
+          --border-color: #e2e8f0;
+          --accent-blue: #2563eb;
+          --accent-purple: #7c3aed;
+          --card-bg: #ffffff;
+          --card-border: #e2e8f0;
+          --hero-primary: #1e293b;
+          --hero-accent: #dc2626;
+        }
+        
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
         @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 30px rgba(233, 69, 96, 0.4); } 50% { box-shadow: 0 0 50px rgba(233, 69, 96, 0.7); } }
         .float { animation: float 4s ease-in-out infinite; }
@@ -182,13 +228,52 @@ export default function Home() {
       `}</style>
 
       {/* NAVBAR */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, backdropFilter: "blur(12px)", background: "rgba(15, 15, 26, 0.8)", borderBottom: "1px solid #2d3748", padding: "1rem 2rem" }}>
+      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, backdropFilter: "blur(12px)", background: "var(--bg-secondary)", borderBottom: `1px solid var(--border-color)`, padding: "1rem 2rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <span style={{ fontSize: "2rem" }}>⚖️</span>
-            <span style={{ fontSize: "1.5rem", fontWeight: 700, color: "#e2e8f0" }}>LexAfrica AI</span>
+            <span style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--text-primary)" }}>LexAfrica AI</span>
+            
+            {/* Theme Toggle - Mobile First */}
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              style={{
+                position: "relative",
+                width: "48px",
+                height: "24px",
+                background: darkMode ? "#374151" : "#d1d5db",
+                borderRadius: "9999px",
+                padding: "2px",
+                border: "none",
+                cursor: "pointer",
+                transition: "all 0.3s ease",
+                outline: "none",
+                marginLeft: "0.5rem"
+              }}
+              onMouseEnter={(e) => e.target.style.background = darkMode ? "#4b5563" : "#9ca3af"}
+              onMouseLeave={(e) => e.target.style.background = darkMode ? "#374151" : "#d1d5db"}
+            >
+              <div style={{
+                width: "20px",
+                height: "20px",
+                borderRadius: "50%",
+                background: darkMode ? "#1f2937" : "#ffffff",
+                color: darkMode ? "#fbbf24" : "#f59e0b",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "10px",
+                transform: darkMode ? "translateX(0)" : "translateX(24px)",
+                transition: "all 0.3s ease",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
+              }}>
+                {darkMode ? "🌙" : "☀️"}
+              </div>
+            </button>
           </div>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+          
+          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             <span style={{ fontSize: "0.75rem", color: "#94a3b8", background: "#16213e", padding: "0.5rem 1rem", borderRadius: "999px", border: "1px solid #2d3748" }}>Powered by Llama 3.3 70B</span>
             <span style={{ fontSize: "0.75rem", color: "#f5a623", background: "#16213e", padding: "0.5rem 1rem", borderRadius: "999px", border: "1px solid #f5a623" }}>AMD MI300X</span>
             <span style={{ fontSize: "0.75rem", color: "#10b981", background: "#16213e", padding: "0.5rem 1rem", borderRadius: "999px", border: "1px solid #10b981", display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -196,14 +281,15 @@ export default function Home() {
             </span>
           </div>
         </div>
+      </div>
       </nav>
 
       {/* HERO SECTION */}
       <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "6rem 2rem 2rem" }}>
         <div className="float" style={{ fontSize: "clamp(3.5rem, 8vw, 8rem)", marginBottom: "clamp(1rem, 3vw, 2rem)" }}>⚖️</div>
-        <h1 style={{ fontSize: "clamp(1.75rem, 5vw, 4rem)", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", lineHeight: 1.2 }}>Legal Help for Every</h1>
-        <h1 style={{ fontSize: "clamp(2.25rem, 6vw, 5rem)", fontWeight: 900, color: "#e94560", marginBottom: "clamp(1rem, 3vw, 2rem)", lineHeight: 1 }}>African Citizen</h1>
-        <p style={{ fontSize: "clamp(0.9rem, 2.5vw, 1.25rem)", color: "#94a3b8", maxWidth: "500px", marginBottom: "clamp(2rem, 5vw, 4rem)", lineHeight: 1.6 }}>4 AI agents analyze your problem, find your rights, and draft a formal legal letter in 30 seconds — free.</p>
+        <h1 style={{ fontSize: "clamp(1.75rem, 5vw, 4rem)", fontWeight: 700, color: "var(--hero-primary)", marginBottom: "0.5rem", lineHeight: 1.2 }}>Legal Help for Every</h1>
+        <h1 style={{ fontSize: "clamp(2.25rem, 6vw, 5rem)", fontWeight: 900, color: "var(--hero-accent)", marginBottom: "clamp(1rem, 3vw, 2rem)", lineHeight: 1 }}>African Citizen</h1>
+        <p style={{ fontSize: "clamp(0.9rem, 2.5vw, 1.25rem)", color: "var(--text-secondary)", maxWidth: "500px", marginBottom: "clamp(2rem, 5vw, 4rem)", lineHeight: 1.6 }}>4 AI agents analyze your problem, find your rights, and draft a formal legal letter in 30 seconds — free.</p>
 
         {/* STATS */}
         <div className="stats-container" style={{ marginBottom: "clamp(2rem, 4vw, 4rem)", width: "100%", maxWidth: "800px" }}>
@@ -214,14 +300,15 @@ export default function Home() {
           ].map((stat, i) => (
             <div key={i} className="stat-card" style={{ 
               minWidth: "200px",
-              background: "#16213e", 
-              border: "1px solid #2d3748", 
+              background: "var(--card-bg)", 
+              border: `1px solid var(--card-border)`, 
               borderRadius: "1rem", 
               padding: "2rem", 
-              textAlign: "center"
+              textAlign: "center",
+              boxShadow: darkMode ? "none" : "0 4px 6px rgba(0,0,0,0.1)"
             }}>
               <div className="stat-value" style={{ fontSize: "clamp(1.5rem, 4vw, 3.5rem)", fontWeight: 900, color: stat.color, marginBottom: "0.5rem" }}>{stat.value}</div>
-              <div style={{ fontSize: "clamp(0.6rem, 1.5vw, 0.875rem)", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.05em" }}>{stat.label}</div>
+              <div style={{ fontSize: "clamp(0.6rem, 1.5vw, 0.875rem)", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{stat.label}</div>
             </div>
           ))}
         </div>
@@ -230,18 +317,19 @@ export default function Home() {
         <div className="agent-container" style={{ marginBottom: "clamp(2rem, 4vw, 4rem)", width: "100%", maxWidth: "700px" }}>
           {AGENTS.map((agent) => (
             <div key={agent.id} style={{ 
-              background: "#16213e", 
-              border: "1px solid #2d3748", 
+              background: "var(--card-bg)", 
+              border: `1px solid var(--card-border)`, 
               borderRadius: "1rem", 
               padding: "1.5rem", 
               textAlign: "center",
               transition: "all 0.3s",
-              cursor: "pointer"
+              cursor: "pointer",
+              boxShadow: darkMode ? "none" : "0 4px 6px rgba(0,0,0,0.1)"
             }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#e94560"; e.currentTarget.style.boxShadow = "0 0 30px rgba(233,69,96,0.3)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#2d3748"; e.currentTarget.style.boxShadow = "none"; }}>
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = darkMode ? "#2d3748" : "#e2e8f0"; e.currentTarget.style.boxShadow = darkMode ? "none" : "0 4px 6px rgba(0,0,0,0.1)"; }}>
               <div style={{ fontSize: "clamp(1.5rem, 3vw, 3rem)", marginBottom: "0.5rem" }}>{agent.icon}</div>
-              <div style={{ fontSize: "clamp(0.6rem, 1.5vw, 0.875rem)", fontWeight: 600, color: "#e2e8f0", lineHeight: 1.2 }}>
+              <div style={{ fontSize: "clamp(0.6rem, 1.5vw, 0.875rem)", fontWeight: 600, color: "var(--text-primary)", lineHeight: 1.2 }}>
                 {agent.name}
               </div>
             </div>
@@ -271,23 +359,23 @@ export default function Home() {
       {/* APP SECTION */}
       <section ref={appRef} style={{ minHeight: "100vh", padding: "clamp(3rem, 6vw, 6rem) 2rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div style={{ textAlign: "center", marginBottom: "clamp(2rem, 4vw, 3rem)" }}>
-          <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, color: "#e2e8f0", marginBottom: "1rem" }}>⚖️ Try It Now</h2>
+          <h2 style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 700, color: "var(--text-primary)", marginBottom: "1rem" }}>⚖️ Try It Now</h2>
           <div style={{ width: "100px", height: "4px", background: "#e94560", margin: "0 auto", borderRadius: "2px" }}></div>
         </div>
 
-        <div style={{ width: "100%", maxWidth: "800px", background: "#16213e", border: "1px solid #2d3748", borderRadius: "1.5rem", padding: "clamp(1.5rem, 4vw, 3rem)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+        <div style={{ width: "100%", maxWidth: "800px", background: "var(--card-bg)", border: `1px solid var(--card-border)`, borderRadius: "1.5rem", padding: "clamp(1.5rem, 4vw, 3rem)", boxShadow: darkMode ? "0 20px 60px rgba(0,0,0,0.5)" : "0 20px 60px rgba(0,0,0,0.1)" }}>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "1.5rem", marginBottom: "1.5rem" }}>
             <div>
-              <label style={{ fontSize: "0.75rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "0.5rem" }}>Your Country</label>
+              <label style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "0.5rem" }}>Your Country</label>
               <select value={country} onChange={e => setCountry(e.target.value)}
-                style={{ width: "100%", background: "#0f0f1a", color: "#e2e8f0", border: "1px solid #2d3748", borderRadius: "0.75rem", padding: "0.875rem 1rem", fontSize: "1rem", outline: "none" }}>
+                style={{ width: "100%", background: "var(--bg-tertiary)", color: "var(--text-primary)", border: `1px solid var(--border-color)`, borderRadius: "0.75rem", padding: "0.875rem 1rem", fontSize: "1rem", outline: "none" }}>
                 {COUNTRIES.map(c => <option key={c}>{c}</option>)}
               </select>
             </div>
             <div>
-              <label style={{ fontSize: "0.75rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "0.5rem" }}>Language</label>
+              <label style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "0.5rem" }}>Language</label>
               <select value={language} onChange={e => setLanguage(e.target.value)}
-                style={{ width: "100%", background: "#0f0f1a", color: "#e2e8f0", border: "1px solid #2d3748", borderRadius: "0.75rem", padding: "0.875rem 1rem", fontSize: "1rem", outline: "none" }}>
+                style={{ width: "100%", background: "var(--bg-tertiary)", color: "var(--text-primary)", border: `1px solid var(--border-color)`, borderRadius: "0.75rem", padding: "0.875rem 1rem", fontSize: "1rem", outline: "none" }}>
                 {LANGUAGES.map(l => <option key={l}>{l}</option>)}
               </select>
             </div>
@@ -295,23 +383,23 @@ export default function Home() {
 
           <div style={{ marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
-              <label style={{ fontSize: "0.75rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em" }}>Your Legal Problem</label>
+              <label style={{ fontSize: "0.75rem", color: "var(--text-secondary)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Your Legal Problem</label>
               <button onClick={startVoiceInput} disabled={recording}
-                style={{ background: recording ? "#e94560" : "#0f0f1a", border: "1px solid #2d3748", borderRadius: "0.5rem", padding: "0.5rem 1rem", color: "#e2e8f0", fontSize: "0.875rem", cursor: recording ? "not-allowed" : "pointer" }}>
+                style={{ background: recording ? "#e94560" : "var(--bg-tertiary)", border: `1px solid var(--border-color)`, borderRadius: "0.5rem", padding: "0.5rem 1rem", color: "var(--text-primary)", fontSize: "0.875rem", cursor: recording ? "not-allowed" : "pointer" }}>
                 {recording ? "🔴 Recording..." : "🎤 Voice Input"}
               </button>
             </div>
             <textarea value={problem} onChange={e => setProblem(e.target.value)}
               placeholder="e.g. My landlord has not returned my rent deposit for 3 months..."
               rows={5}
-              style={{ width: "100%", background: "#0f0f1a", color: "#e2e8f0", border: "1px solid #2d3748", borderRadius: "0.75rem", padding: "1rem", fontSize: "1rem", resize: "none", outline: "none", fontFamily: "inherit" }}
+              style={{ width: "100%", background: "var(--bg-tertiary)", color: "var(--text-primary)", border: `1px solid var(--border-color)`, borderRadius: "0.75rem", padding: "1rem", fontSize: "1rem", resize: "none", outline: "none", fontFamily: "inherit" }}
             />
           </div>
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginBottom: "2rem" }}>
             {EXAMPLES.map(ex => (
               <button key={ex} onClick={() => setProblem(ex)}
-                style={{ fontSize: "0.75rem", color: "#94a3b8", background: "#0f0f1a", border: "1px solid #2d3748", borderRadius: "999px", padding: "0.5rem 1rem", cursor: "pointer" }}>
+                style={{ fontSize: "0.75rem", color: "var(--text-secondary)", background: "var(--bg-tertiary)", border: `1px solid var(--border-color)`, borderRadius: "999px", padding: "0.5rem 1rem", cursor: "pointer" }}>
                 {ex}
               </button>
             ))}
