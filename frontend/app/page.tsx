@@ -133,59 +133,56 @@ export default function Home() {
       `}</style>
 
       {/* NAVBAR */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, backdropFilter: "blur(12px)", background: "rgba(15, 15, 26, 0.8)", borderBottom: "1px solid #2d3748", padding: "1rem 3rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, backdropFilter: "blur(12px)", background: "rgba(15, 15, 26, 0.8)", borderBottom: "1px solid #2d3748", padding: "1rem 1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          <span style={{ fontSize: "2rem" }}>⚖️</span>
-          <span style={{ fontSize: "1.5rem", fontWeight: 700, color: "#e2e8f0" }}>LexAfrica AI</span>
+          <span style={{ fontSize: "1.5rem" }}>⚖️</span>
+          <span style={{ fontSize: "1.25rem", fontWeight: 700, color: "#e2e8f0" }}>LexAfrica AI</span>
         </div>
-        <div style={{ display: "flex", gap: "0.75rem" }}>
-          <span style={{ fontSize: "0.75rem", color: "#94a3b8", background: "#16213e", padding: "0.5rem 1rem", borderRadius: "999px", border: "1px solid #2d3748" }}>Powered by Llama 3.3 70B</span>
-          <span style={{ fontSize: "0.75rem", color: "#f5a623", background: "#16213e", padding: "0.5rem 1rem", borderRadius: "999px", border: "1px solid #f5a623" }}>AMD MI300X</span>
-          <span style={{ fontSize: "0.75rem", color: "#10b981", background: "#16213e", padding: "0.5rem 1rem", borderRadius: "999px", border: "1px solid #10b981", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <span style={{ width: "8px", height: "8px", background: "#10b981", borderRadius: "50%", animation: "pulse 2s infinite" }}></span>Live Demo
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          <span style={{ fontSize: "0.65rem", color: "#94a3b8", background: "#16213e", padding: "0.4rem 0.75rem", borderRadius: "999px", border: "1px solid #2d3748", whiteSpace: "nowrap" }}>Llama 3.3 70B</span>
+          <span style={{ fontSize: "0.65rem", color: "#f5a623", background: "#16213e", padding: "0.4rem 0.75rem", borderRadius: "999px", border: "1px solid #f5a623", whiteSpace: "nowrap" }}>AMD MI300X</span>
+          <span style={{ fontSize: "0.65rem", color: "#10b981", background: "#16213e", padding: "0.4rem 0.75rem", borderRadius: "999px", border: "1px solid #10b981", display: "flex", alignItems: "center", gap: "0.4rem", whiteSpace: "nowrap" }}>
+            <span style={{ width: "6px", height: "6px", background: "#10b981", borderRadius: "50%", animation: "pulse 2s infinite" }}></span>Live
           </span>
         </div>
       </nav>
 
       {/* HERO SECTION */}
-      <section style={{ height: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "0 2rem" }}>
-        <div className="float" style={{ fontSize: "8rem", marginBottom: "2rem" }}>⚖️</div>
-        <h1 style={{ fontSize: "4rem", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", lineHeight: 1.2 }}>Legal Help for Every</h1>
-        <h1 style={{ fontSize: "5rem", fontWeight: 900, color: "#e94560", marginBottom: "2rem", lineHeight: 1 }}>African Citizen</h1>
-        <p style={{ fontSize: "1.25rem", color: "#94a3b8", maxWidth: "500px", marginBottom: "4rem" }}>4 AI agents analyze your problem, find your rights, and draft a formal legal letter in 30 seconds — free.</p>
+      <section style={{ minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center", padding: "6rem 1rem 2rem" }}>
+        <div className="float" style={{ fontSize: "clamp(4rem, 15vw, 8rem)", marginBottom: "1.5rem" }}>⚖️</div>
+        <h1 style={{ fontSize: "clamp(2rem, 8vw, 4rem)", fontWeight: 700, color: "#fff", marginBottom: "0.5rem", lineHeight: 1.2, padding: "0 1rem" }}>Legal Help for Every</h1>
+        <h1 style={{ fontSize: "clamp(2.5rem, 10vw, 5rem)", fontWeight: 900, color: "#e94560", marginBottom: "1.5rem", lineHeight: 1, padding: "0 1rem" }}>African Citizen</h1>
+        <p style={{ fontSize: "clamp(1rem, 3vw, 1.25rem)", color: "#94a3b8", maxWidth: "500px", marginBottom: "3rem", padding: "0 1rem" }}>4 AI agents analyze your problem, find your rights, and draft a formal legal letter in 30 seconds — free.</p>
 
         {/* STATS */}
-        <div style={{ display: "flex", gap: "3rem", marginBottom: "4rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 200px))", gap: "1.5rem", marginBottom: "3rem", width: "100%", maxWidth: "700px", padding: "0 1rem" }}>
           {[
             { label: "People Served", value: `${stats.people}B`, color: "#e94560" },
             { label: "Countries", value: stats.countries, color: "#f5a623" },
             { label: "Seconds", value: stats.seconds, color: "#10b981" }
           ].map((stat, i) => (
-            <div key={i} style={{ width: "200px", background: "#16213e", border: "1px solid #2d3748", borderRadius: "1rem", padding: "2rem", textAlign: "center" }}>
-              <div style={{ fontSize: "3.5rem", fontWeight: 900, color: stat.color, marginBottom: "0.5rem" }}>{stat.value}</div>
-              <div style={{ fontSize: "0.875rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em" }}>{stat.label}</div>
+            <div key={i} style={{ background: "#16213e", border: "1px solid #2d3748", borderRadius: "1rem", padding: "1.5rem", textAlign: "center" }}>
+              <div style={{ fontSize: "clamp(2.5rem, 6vw, 3.5rem)", fontWeight: 900, color: stat.color, marginBottom: "0.5rem" }}>{stat.value}</div>
+              <div style={{ fontSize: "0.75rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em" }}>{stat.label}</div>
             </div>
           ))}
         </div>
 
         {/* AGENT PIPELINE */}
-        <div style={{ display: "flex", gap: "1rem", alignItems: "center", marginBottom: "4rem" }}>
-          {AGENTS.map((agent, i) => (
-            <div key={agent.id} style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-              <div style={{ width: "160px", background: "#16213e", border: "1px solid #2d3748", borderRadius: "1rem", padding: "1.5rem", textAlign: "center", transition: "all 0.3s", cursor: "pointer" }}
-                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#e94560"; e.currentTarget.style.boxShadow = "0 0 30px rgba(233,69,96,0.3)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#2d3748"; e.currentTarget.style.boxShadow = "none"; }}>
-                <div style={{ fontSize: "3rem", marginBottom: "0.5rem" }}>{agent.icon}</div>
-                <div style={{ fontSize: "0.875rem", fontWeight: 600, color: "#e2e8f0" }}>{agent.name}</div>
-              </div>
-              {i < AGENTS.length - 1 && <span style={{ fontSize: "2rem", color: "#e94560" }}>→</span>}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 160px))", gap: "1rem", marginBottom: "3rem", width: "100%", maxWidth: "700px", padding: "0 1rem" }}>
+          {AGENTS.map((agent) => (
+            <div key={agent.id} style={{ background: "#16213e", border: "1px solid #2d3748", borderRadius: "1rem", padding: "1.25rem", textAlign: "center", transition: "all 0.3s", cursor: "pointer" }}
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#e94560"; e.currentTarget.style.boxShadow = "0 0 30px rgba(233,69,96,0.3)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = "#2d3748"; e.currentTarget.style.boxShadow = "none"; }}>
+              <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>{agent.icon}</div>
+              <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "#e2e8f0" }}>{agent.name}</div>
             </div>
           ))}
         </div>
 
         {/* CTA */}
         <button onClick={scrollToApp} className="pulse-glow"
-          style={{ width: "300px", padding: "1.25rem 2rem", background: "linear-gradient(135deg, #e94560, #c0392b)", color: "#fff", border: "none", borderRadius: "1rem", fontSize: "1.25rem", fontWeight: 700, cursor: "pointer", transition: "transform 0.2s" }}
+          style={{ width: "min(300px, 90%)", padding: "1.25rem 2rem", background: "linear-gradient(135deg, #e94560, #c0392b)", color: "#fff", border: "none", borderRadius: "1rem", fontSize: "clamp(1rem, 3vw, 1.25rem)", fontWeight: 700, cursor: "pointer", transition: "transform 0.2s" }}
           onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
           onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}>
           ⚖️ Get Free Legal Help
@@ -193,14 +190,14 @@ export default function Home() {
       </section>
 
       {/* APP SECTION */}
-      <section ref={appRef} style={{ minHeight: "100vh", padding: "6rem 2rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <h2 style={{ fontSize: "3rem", fontWeight: 700, color: "#e2e8f0", marginBottom: "1rem" }}>⚖️ Try It Now</h2>
+      <section ref={appRef} style={{ minHeight: "100vh", padding: "4rem 1rem", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+          <h2 style={{ fontSize: "clamp(2rem, 6vw, 3rem)", fontWeight: 700, color: "#e2e8f0", marginBottom: "1rem" }}>⚖️ Try It Now</h2>
           <div style={{ width: "100px", height: "4px", background: "#e94560", margin: "0 auto", borderRadius: "2px" }}></div>
         </div>
 
-        <div style={{ width: "100%", maxWidth: "800px", background: "#16213e", border: "1px solid #2d3748", borderRadius: "1.5rem", padding: "3rem", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem", marginBottom: "1.5rem" }}>
+        <div style={{ width: "100%", maxWidth: "800px", background: "#16213e", border: "1px solid #2d3748", borderRadius: "1.5rem", padding: "clamp(1.5rem, 4vw, 3rem)", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.5rem", marginBottom: "1.5rem" }}>
             <div>
               <label style={{ fontSize: "0.75rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em", display: "block", marginBottom: "0.5rem" }}>Your Country</label>
               <select value={country} onChange={e => setCountry(e.target.value)}
@@ -248,9 +245,9 @@ export default function Home() {
 
           {/* AGENT PROGRESS */}
           {loading && (
-            <div style={{ marginTop: "2rem", padding: "2rem", background: "#0f0f1a", borderRadius: "1rem", border: "1px solid #2d3748" }}>
+            <div style={{ marginTop: "2rem", padding: "clamp(1rem, 3vw, 2rem)", background: "#0f0f1a", borderRadius: "1rem", border: "1px solid #2d3748" }}>
               <p style={{ fontSize: "0.875rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "1.5rem" }}>Agent Pipeline Running</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
                 {AGENTS.map(a => (
                   <div key={a.id} style={{ background: activeAgent === a.id ? "#0f3460" : "#16213e", border: `1px solid ${activeAgent === a.id ? "#e94560" : "#2d3748"}`, borderRadius: "0.75rem", padding: "1rem", display: "flex", alignItems: "center", gap: "1rem" }}>
                     <span style={{ fontSize: "2rem" }}>{activeAgent === a.id ? "⚡" : activeAgent > a.id ? "✅" : a.icon}</span>
@@ -274,22 +271,22 @@ export default function Home() {
           {/* RESULTS */}
           {result && (
             <div style={{ marginTop: "2rem" }}>
-              <div style={{ background: "linear-gradient(135deg, #16213e, #0f3460)", border: "1px solid #e94560", borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.5rem", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ background: "linear-gradient(135deg, #16213e, #0f3460)", border: "1px solid #e94560", borderRadius: "1rem", padding: "1.5rem", marginBottom: "1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
                 <div>
                   <p style={{ fontSize: "0.75rem", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.1em" }}>Legal Domain Identified</p>
-                  <p style={{ fontSize: "1.5rem", fontWeight: 700, color: "#e94560", marginTop: "0.25rem" }}>{result.domain}</p>
+                  <p style={{ fontSize: "clamp(1.125rem, 3vw, 1.5rem)", fontWeight: 700, color: "#e94560", marginTop: "0.25rem" }}>{result.domain}</p>
                 </div>
                 <button onClick={downloadPDF}
-                  style={{ background: "#f5a623", color: "#0f0f1a", border: "none", borderRadius: "0.75rem", padding: "0.75rem 1.5rem", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer" }}>
+                  style={{ background: "#f5a623", color: "#0f0f1a", border: "none", borderRadius: "0.75rem", padding: "0.75rem 1.5rem", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer", width: "100%" }}>
                   📄 Download PDF
                 </button>
               </div>
 
-              <div style={{ display: "flex", gap: "0.75rem", marginBottom: "1.5rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))", gap: "0.75rem", marginBottom: "1.5rem" }}>
                 {(["advice","rights","letter","sources"] as const).map(t => (
                   <button key={t} onClick={() => setTab(t)}
-                    style={{ flex: 1, padding: "0.75rem", borderRadius: "0.75rem", border: `1px solid ${tab === t ? "#e94560" : "#2d3748"}`, background: tab === t ? "#e94560" : "#0f0f1a", color: tab === t ? "#fff" : "#94a3b8", fontWeight: 600, fontSize: "0.875rem", cursor: "pointer" }}>
-                    {t === "advice" ? "⚖️ Advice" : t === "rights" ? "🛡️ Rights" : t === "letter" ? "📝 Legal Letter" : "🌐 Sources"}
+                    style={{ padding: "0.75rem 0.5rem", borderRadius: "0.75rem", border: `1px solid ${tab === t ? "#e94560" : "#2d3748"}`, background: tab === t ? "#e94560" : "#0f0f1a", color: tab === t ? "#fff" : "#94a3b8", fontWeight: 600, fontSize: "clamp(0.75rem, 2vw, 0.875rem)", cursor: "pointer", whiteSpace: "nowrap" }}>
+                    {t === "advice" ? "⚖️ Advice" : t === "rights" ? "🛡️ Rights" : t === "letter" ? "📝 Letter" : "🌐 Sources"}
                   </button>
                 ))}
               </div>
@@ -360,7 +357,7 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ borderTop: "1px solid #2d3748", padding: "2rem", textAlign: "center", fontSize: "0.875rem", color: "#94a3b8" }}>
+      <footer style={{ borderTop: "1px solid #2d3748", padding: "2rem 1rem", textAlign: "center", fontSize: "clamp(0.75rem, 2vw, 0.875rem)", color: "#94a3b8" }}>
         <p>Built with ❤️ for AI Agent Olympics Hackathon 2026 | MIT License | 1.4B Africans deserve legal access</p>
       </footer>
     </div>
